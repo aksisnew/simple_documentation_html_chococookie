@@ -142,100 +142,83 @@ def hello_world():
     </code></pre>
   </div>
 
+  <!-- Unified Download Page -->
   <div id="download" class="tab-content">
     <h2>Download Page</h2>
-    <div id="downloadCode" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
-# Example Markdown Code
-def hello_world():
-    print("Hello, world!")
-    </div>
-    <button onclick="downloadMD()">Download as .md</button>
-<div id="download" class="tab-content">
-  <h2>Download Page</h2>
 
-  <div id="downloadCode1" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode1" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 1
 def hello_world():
     print("Hello, world!")
-  </div>
-  <button onclick="downloadMD('downloadCode1','code1.md')">Download 1</button>
+    </div>
+    <button onclick="downloadMD('downloadCode1','code1.md')">Download 1</button>
 
-  <div id="downloadCode2" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode2" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 2
 def greet(name):
     print(f"Hello, {name}!")
-  </div>
-  <button onclick="downloadMD('downloadCode2','code2.md')">Download 2</button>
+    </div>
+    <button onclick="downloadMD('downloadCode2','code2.md')">Download 2</button>
 
-  <div id="downloadCode3" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode3" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 3
 for i in range(5):
     print(i)
-  </div>
-  <button onclick="downloadMD('downloadCode3','code3.md')">Download 3</button>
+    </div>
+    <button onclick="downloadMD('downloadCode3','code3.md')">Download 3</button>
 
-  <div id="downloadCode4" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode4" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 4
 numbers = [1,2,3]
 print(sum(numbers))
-  </div>
-  <button onclick="downloadMD('downloadCode4','code4.md')">Download 4</button>
+    </div>
+    <button onclick="downloadMD('downloadCode4','code4.md')">Download 4</button>
 
-  <div id="downloadCode5" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode5" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 5
 import math
 print(math.sqrt(16))
-  </div>
-  <button onclick="downloadMD('downloadCode5','code5.md')">Download 5</button>
+    </div>
+    <button onclick="downloadMD('downloadCode5','code5.md')">Download 5</button>
 
-  <div id="downloadCode6" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode6" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 6
 items = ["apple","banana"]
 for item in items:
     print(item)
-  </div>
-  <button onclick="downloadMD('downloadCode6','code6.md')">Download 6</button>
+    </div>
+    <button onclick="downloadMD('downloadCode6','code6.md')">Download 6</button>
 
-  <div id="downloadCode7" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode7" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 7
 x = {"a":1,"b":2}
 print(x["a"])
-  </div>
-  <button onclick="downloadMD('downloadCode7','code7.md')">Download 7</button>
+    </div>
+    <button onclick="downloadMD('downloadCode7','code7.md')">Download 7</button>
 
-  <div id="downloadCode8" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode8" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 8
 def square(n): return n*n
 print(square(4))
-  </div>
-  <button onclick="downloadMD('downloadCode8','code8.md')">Download 8</button>
+    </div>
+    <button onclick="downloadMD('downloadCode8','code8.md')">Download 8</button>
 
-  <div id="downloadCode9" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode9" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 9
 with open("file.txt","w") as f:
     f.write("data")
-  </div>
-  <button onclick="downloadMD('downloadCode9','code9.md')">Download 9</button>
+    </div>
+    <button onclick="downloadMD('downloadCode9','code9.md')">Download 9</button>
 
-  <div id="downloadCode10" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+    <div id="downloadCode10" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
 # Example Markdown Code 10
 try:
     1/0
 except ZeroDivisionError:
     print("Error!")
+    </div>
+    <button onclick="downloadMD('downloadCode10','code10.md')">Download 10</button>
   </div>
-  <button onclick="downloadMD('downloadCode10','code10.md')">Download 10</button>
-</div>
-
-
-
-
-
-
-
-
-  </div>
-
 
   <div id="extra1" class="tab-content">
     <h2>Extra Section 1</h2>
@@ -300,30 +283,17 @@ except ZeroDivisionError:
     });
   });
 
-  // Download functionality
-  function downloadMD() {
-    const code = document.getElementById('downloadCode').innerText;
+  // Unified Download functionality for multiple divs
+  function downloadMD(divId, filename) {
+    const code = document.getElementById(divId).innerText;
     const blob = new Blob([code], { type: "text/markdown" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "code.md";
+    link.download = filename;
     link.click();
     URL.revokeObjectURL(link.href);
   }
 </script>
 
-<script>
-    // Download functionality for multiple divs
-function downloadMD(divId, filename) {
-  const code = document.getElementById(divId).innerText;
-  const blob = new Blob([code], { type: "text/markdown" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(link.href);
-}
-
-</script>
 </body>
 </html>
