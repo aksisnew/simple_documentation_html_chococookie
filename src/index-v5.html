@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Tabbed Documentation Guide</title>
+<style>
+  :root {
+    --sidebar-width: 250px;
+    --sidebar-height: 100vh;
+    --content-width: calc(100% - var(--sidebar-width));
+    --tab-height: 40px;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: var(--sidebar-width);
+    height: var(--sidebar-height);
+    background: #2c3e50;
+    color: #ecf0f1;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+  .sidebar.collapsed { transform: translateX(-100%); }
+  .sidebar h2 { padding: 1rem; margin: 0; background: #34495e; }
+  .sidebar ul { list-style: none; padding: 0; margin: 0; }
+  .sidebar ul li { padding: 0.8rem 1rem; cursor: pointer; }
+  .sidebar ul li:hover { background: #3d566e; }
+
+  /* Toggle button */
+  .toggle-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  /* Content */
+  .content {
+    margin-left: var(--sidebar-width);
+    padding: 1rem;
+    width: var(--content-width);
+    transition: margin-left 0.3s ease;
+    font-size: 16px;
+  }
+  .sidebar.collapsed ~ .content { margin-left: 0; width: 100%; }
+
+  /* Tabs */
+  .tabs { display: flex; border-bottom: 2px solid #ccc; }
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    margin-right: 5px;
+  }
+  .tab.active { background: white; font-weight: bold; }
+  .tab-content { display: none; padding: 1rem; border: 1px solid #ccc; }
+  .tab-content.active { display: block; }
+
+  /* Code block */
+  pre {
+    background: #272822;
+    color: #f8f8f2;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+  }
+
+  /* Light/Dark mode */
+  body.light { background: #ffffff; color: #000000; }
+  body.dark { background: #121212; color: #e0e0e0; }
+  body.dark .sidebar { background: #1e1e1e; color: #e0e0e0; }
+  body.dark .tab { background: #333; color: #e0e0e0; }
+  body.dark .tab.active { background: #222; }
+</style>
+</head>
+<body class="light">
+
+<button class="toggle-btn">☰ Menu</button>
+
+<div class="sidebar">
+  <h2>Docs Sidebar</h2>
+  <input type="text" id="sidebarSearch" placeholder="Search..." style="width:90%;margin:10px;padding:6px;border-radius:4px;border:none;">
+  <ul id="sidebarList">
+    <li onclick="openTab('intro')">Introduction</li>
+    <li onclick="openTab('usage')">Usage</li>
+    <li onclick="openTab('code')">Code Example</li>
+    <li onclick="openTab('download')">Download Page</li>
+    <li onclick="openTab('extra1')">Extra Section 1</li>
+    <li onclick="openTab('extra2')">Extra Section 2</li>
+    <li onclick="openTab('extra3')">Extra Section 3</li>
+  </ul>
+</div>
+
+<div class="content">
+  <div style="margin-bottom:10px;">
+    <button onclick="changeTextSize('increase')">A+</button>
+    <button onclick="changeTextSize('decrease')">A-</button>
+    <button onclick="changeTextSize('reset')">Reset</button>
+    <button onclick="toggleTheme()">🌗 Mode</button>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="openTab('intro')">Introduction</div>
+    <div class="tab" onclick="openTab('usage')">Usage</div>
+    <div class="tab" onclick="openTab('code')">Code Example</div>
+    <div class="tab" onclick="openTab('download')">Download Page</div>
+  </div>
+
+  <div id="intro" class="tab-content active">
+    <h2>Welcome</h2>
+    <p>This is a dynamic documentation guide template with tabs, collapsible sidebar, search, text size controls, and light/dark mode.</p>
+  </div>
+
+  <div id="usage" class="tab-content">
+    <h2>Usage</h2>
+    <p>Click the sidebar items or tabs to navigate between sections.</p>
+  </div>
+
+  <div id="code" class="tab-content">
+    <h2>Code Example</h2>
+    <pre><code>
+def hello_world():
+    print("Hello, world!")
+    </code></pre>
+  </div>
+
+  <div id="download" class="tab-content">
+    <h2>Download Page</h2>
+    <div id="downloadCode" style="background:#f4f4f4;padding:10px;border:1px solid #ccc;">
+# Example Markdown Code
+def hello_world():
+    print("Hello, world!")
+    </div>
+    <button onclick="downloadMD()">Download as .md</button>
+  </div>
+
+  <div id="extra1" class="tab-content">
+    <h2>Extra Section 1</h2>
+    <p>Placeholder for additional documentation.</p>
+  </div>
+
+  <div id="extra2" class="tab-content">
+    <h2>Extra Section 2</h2>
+    <p>Placeholder for more content.</p>
+  </div>
+
+  <div id="extra3" class="tab-content">
+    <h2>Extra Section 3</h2>
+    <p>Placeholder for even more content.</p>
+  </div>
+</div>
+
+<script>
+  // Sidebar toggle
+  const toggleBtn = document.querySelector('.toggle-btn');
+  const sidebar = document.querySelector('.sidebar');
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+  });
+
+  // Tab switching
+  function openTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    const target = document.getElementById(tabId);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => {
+      if (t.textContent.toLowerCase().includes(tabId)) {
+        t.classList.add('active');
+      }
+    });
+  }
+
+  // Text size manipulation
+  let currentSize = 16;
+  function changeTextSize(action) {
+    const content = document.querySelector('.content');
+    if (action === 'increase') currentSize += 2;
+    if (action === 'decrease') currentSize -= 2;
+    if (action === 'reset') currentSize = 16;
+    content.style.fontSize = currentSize + 'px';
+  }
+
+  // Light/Dark mode toggle
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+    document.body.classList.toggle('light');
+  }
+
+  // Sidebar search/filter functionality
+  const searchBox = document.getElementById('sidebarSearch');
+  searchBox.addEventListener('keyup', () => {
+    const query = searchBox.value.toLowerCase();
+    document.querySelectorAll('#sidebarList li').forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(query) ? 'block' : 'none';
+    });
+  });
+
+  // Download functionality
+  function downloadMD() {
+    const code = document.getElementById('downloadCode').innerText;
+    const blob = new Blob([code], { type: "text/markdown" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "code.md";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+</script>
+
+</body>
+</html>
