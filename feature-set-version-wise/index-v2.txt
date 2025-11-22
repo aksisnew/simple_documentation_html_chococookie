@@ -1,0 +1,6 @@
+Feature set for index-v2
+
+-> text size manupalation for content div
+-> search bar
+-> light dark mode
+-> all other features from v1

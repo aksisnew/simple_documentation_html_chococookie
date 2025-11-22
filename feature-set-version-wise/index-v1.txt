@@ -1,0 +1,5 @@
+Feature set for v1
+
+-> side bar
+-> search bar
+-> basic top bar
